@@ -6,7 +6,7 @@ async function run() {
   sock.connect("tcp://127.0.0.1:3000");
   console.log("Producer bound to port 3000");
 
-  await sock.send("test");
+  await sock.send("START");
   const [result] = await sock.receive();
 
   console.log(result.toString());
