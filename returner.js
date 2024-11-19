@@ -14,34 +14,38 @@ async function run() {
       //read file
       fs.readFile('./.playlistSessionData', 'utf8', (err, data) => {
         if (err) { //if no file exists...
-          if (err.code = 'ENOENT'){ //No file exists, therefore create one
-            data = 'workTime';
+          if (err.code = 'ENOENT'){ //No file exists,
+            //therefore create one
             fs.writeFile('./.playlistSessionData', '', err => {
-              if (err) { //ERROR
-                console.error(err); //this shouldnt happen
+              if (err) { //ERROR handling
+                console.error(err);
               } else {
                 // file created successfully
+                console.log('creation');
                 replyMsg = 'empty';
               }
             });
           }
-          else{ //handle any error that wasnt the lack of a file
+          else{ //report any error that wasnt the lack of a file
             console.error(err);
-            return; //this will break it, and is the reason an "else" doesnt need to exist below
+            return; //break out
           }
         }
+
         //If file exists...
         //check if its empty
-        if (data === '')
+        if (data === ""){
           replyMsg = 'empty';
-
+          console.log('empty');
+        }
         //if its not empty...
-        console.log(data);
+        else{
+          console.log(data);
+        }
       });
     }
 
-
-
+    console.log(replyMsg + msg.toString());
     await sock.send(replyMsg + msg.toString());
   }
 }
