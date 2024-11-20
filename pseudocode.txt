@@ -1,0 +1,11 @@
+if recieved request = start
+    check for session file
+    if file exists
+        read and send data
+    if file does not exist
+        create one and send empty response
+
+else if recieved request = save
+    begin read chain
+    put data into file
+    kill self
