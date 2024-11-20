@@ -33,7 +33,14 @@ async function doWork(msg){
   //let result = '';
   try{
     const data = await fs.readFile('./.playlistSessionData', { encoding: 'utf8' });
+    //if empty
+    if (data === '')
+      return "empty";
+    //else
+
+    //code working with reading data here
     return data;
+    
   } catch (error) {
     //console.log(error);
     if (error.code = 'ENOENT'){
