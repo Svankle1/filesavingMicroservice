@@ -2,7 +2,7 @@ const zmq = require("zeromq");
 //const fs = require('node:fs');
 const fs = require('fs/promises');
 
-async function run() {
+async function runServer() {
   const sock = new zmq.Reply();
   let replyMsg = '';
 
@@ -14,39 +14,39 @@ async function run() {
 
 
     //console.log(replyMsg + msg.toString());
-    result = 'Result: ' + await doWork(msg);
+    resultJson = await doStartWork(msg);
     //await sock.send('Result: ' + doWork(msg));
-    await sock.send(result);
+    await sock.send(JSON.stringify(resultJson));
   }
 }
 
 async function writeBlank(){
   try {
     const content = '';
-    await fs.writeFile('./.playlistSessionData', content);
+    await fs.writeFile('./.playlistSessionData.json', content);
   } catch (err) {
     console.log(err);
   }
 }
 
-async function doWork(msg){
+async function doStartWork(msg){
   //let result = '';
   try{
-    const data = await fs.readFile('./.playlistSessionData', { encoding: 'utf8' });
+    const data = await fs.readFile('./.playlistSessionData.json', { encoding: 'utf8' });
     //if empty
     if (data === '')
-      return "empty";
+      return {response:'Empty', array:[{item0:'blank'}] };
     //else
 
     //code working with reading data here
     return data;
-    
+
   } catch (error) {
     //console.log(error);
     if (error.code = 'ENOENT'){
       //console.log("fixing")
       await writeBlank();
-      return "empty";
+      return {response:'Empty', array:[{item0:'blank'}] };
     }
     else{
       console.error("Error: ", error);
@@ -55,5 +55,5 @@ async function doWork(msg){
   }
 }
 
-run();
+runServer();
 //await fs.writeFile('./.playlistData', '');
