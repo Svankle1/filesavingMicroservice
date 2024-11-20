@@ -1,6 +1,6 @@
 const zmq = require("zeromq");
 //const fs = require('node:fs');
-const fs = require('fs');
+const fs = require('fs/promises');
 
 async function run() {
   const sock = new zmq.Reply();
@@ -14,50 +14,39 @@ async function run() {
 
 
     //console.log(replyMsg + msg.toString());
-    result = 'Result: ' + doWork(msg);
+    result = 'Result: ' + await doWork(msg);
     //await sock.send('Result: ' + doWork(msg));
     await sock.send(result);
   }
 }
 
-function doWork(msg){
-  let replyMsg = '';
-  //if message = START
-  if (msg.toString() == "START"){
-    //read file
-    try {
-      const data = fs.readFileSync('./.playlistSessionData', 'utf8');
-      console.log(data);
-      //check if its empty
-      if (data === '')
-        return "empty";
-      //if its not empty...
-      console.log("returning data");
-      return data;
-
-    } catch (err) {
-      if (err) { //if no file exists...
-        if (err.code = 'ENOENT'){ //No file exists,
-          //therefore create one
-          fs.writeFile('./.playlistSessionData', '', err => {
-            if (err) { //standard ERROR handling
-              replyMsg = err;
-              console.error(err);
-            } else {
-              // file created successfully
-              console.log('creation');
-              replyMsg = "empty";
-            }
-          });
-        }
-        else{ //report any error that wasnt the lack of a file
-          console.error(err);
-        }
-      }
-    }
-
+async function writeBlank(){
+  try {
+    const content = '';
+    await fs.writeFile('./.playlistSessionData', content);
+  } catch (err) {
+    console.log(err);
   }
-  return replyMsg;
+}
+
+async function doWork(msg){
+  //let result = '';
+  try{
+    const data = await fs.readFile('./.playlistSessionData', { encoding: 'utf8' });
+    return data;
+  } catch (error) {
+    //console.log(error);
+    if (error.code = 'ENOENT'){
+      //console.log("fixing")
+      await writeBlank();
+      return "empty";
+    }
+    else{
+      console.error("Error: ", error);
+      return ("Wierd error: " + error);
+    }
+  }
 }
 
 run();
+//await fs.writeFile('./.playlistData', '');
