@@ -32,7 +32,9 @@ async function writeBlank(){
 async function doStartWork(msg){
   //let result = '';
   try{
-    const data = await fs.readFile('./.playlistSessionData.json', { encoding: 'utf8' });
+    let data = await fs.readFile('./.playlistSessionData.json', { encoding: 'utf8' });
+    data = JSON.parse(data);
+    
     //if empty
     if (data === '')
       return {response:'Empty', array:[{item0:'blank'}] };
