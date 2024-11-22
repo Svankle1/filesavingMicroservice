@@ -9,30 +9,40 @@ async function runServer() {
   await sock.bind("tcp://127.0.0.1:3000");
 
   for await (const [msg] of sock) { //currently reading
-    console.log(msg.toString());
-    //await sock.send('Begining to parse' + msg.toString());
+    //console.log(JSON.parse(msg.toString()));
+    const order = JSON.parse(msg.toString())
 
+    
+    if(order.operation == "read"){
+      resultJson = await readIfExists(order.path);
+    }
+    else if (order.operation == "write"){
+      
+      //do end work
+    }
+    else {
+      await sock.send(JSON.stringify(resultJson));
+      console.error("Error: Order " + order.operation + " recieved. Does not allign with the 2 preset operations.");
+      break;
+    }
 
-    //console.log(replyMsg + msg.toString());
-    resultJson = await doStartWork(msg);
-    //await sock.send('Result: ' + doWork(msg));
     await sock.send(JSON.stringify(resultJson));
   }
 }
 
-async function writeBlank(){
+async function writeBlank(path){
   try {
     const content = '';
-    await fs.writeFile('./.playlistSessionData.json', content);
+    await fs.writeFile(path, content);
   } catch (err) {
     console.log(err);
   }
 }
 
-async function doStartWork(msg){
+async function readIfExists(path){
   //let result = '';
   try{
-    let data = await fs.readFile('./.playlistSessionData.json', { encoding: 'utf8' });
+    let data = await fs.readFile(path, { encoding: 'utf8' });
     data = JSON.parse(data);
     
     //if empty
@@ -46,7 +56,6 @@ async function doStartWork(msg){
   } catch (error) {
     //console.log(error);
     if (error.code = 'ENOENT'){
-      //console.log("fixing")
       await writeBlank();
       return {response:'Empty', array:[{item0:'blank'}] };
     }
