@@ -1,6 +1,7 @@
 const zmq = require("zeromq");
 //const fs = require('node:fs');
 const fs = require('fs/promises');
+const { write } = require("fs");
 
 async function runServer() {
   const sock = new zmq.Reply();
@@ -17,11 +18,10 @@ async function runServer() {
       resultJson = await readIfExists(order.path);
     }
     else if (order.operation == "write"){
-      
-      //do end work
+      resultJson = await writeToFile(order.path, JSON.stringify(order.data));
     }
     else {
-      await sock.send(JSON.stringify(resultJson));
+      resultJson = {message: "Error: Order " + order.operation + " recieved. Does not allign with the 2 preset operations."};
       console.error("Error: Order " + order.operation + " recieved. Does not allign with the 2 preset operations.");
       break;
     }
@@ -30,13 +30,14 @@ async function runServer() {
   }
 }
 
-async function writeBlank(path){
+async function writeToFile(path, content){
   try {
-    const content = '';
     await fs.writeFile(path, content);
   } catch (err) {
     console.log(err);
+    return {response:"Wierd error on write: " + err};
   }
+  return {response:"No code breakage"};
 }
 
 async function readIfExists(path){
@@ -47,7 +48,7 @@ async function readIfExists(path){
     
     //if empty
     if (data === '')
-      return {response:'Empty', array:[{item0:'blank'}] };
+      return {response:'Empty', list:[{item0:'blank'}] };
     //else
 
     //code working with reading data here
@@ -56,12 +57,12 @@ async function readIfExists(path){
   } catch (error) {
     //console.log(error);
     if (error.code = 'ENOENT'){
-      await writeBlank();
-      return {response:'Empty', array:[{item0:'blank'}] };
+      await writeToFile(path, '');
+      return {response:'Empty', list:[{item0:'blank'}] };
     }
     else{
       console.error("Error: ", error);
-      return ("Wierd error: " + error);
+      return {response:"Wierd error on read: " + error, list:[{item0:'blank'}]};
     }
   }
 }
