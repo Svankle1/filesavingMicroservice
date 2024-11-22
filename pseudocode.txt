@@ -1,0 +1,10 @@
+start{
+    //while file exists and isnt empty
+    open json
+        send json
+}
+
+
+end(save){
+
+}

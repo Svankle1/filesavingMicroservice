@@ -1,0 +1,13 @@
+v
+Entry 1: A Talking Bass Guitar Interviews the Remie From Intergalactic Channels
+Link: https://soundcloud.com/evan-mcdoniels/a-talking-bass-guitar
+Details: SoundCloud
+
+Entry 2: Get Out (Phase 1) - Deceive INC OST
+Link: https://youtu.be/-pgHFD_rrso
+
+[V]iew List
+[A]dd Entry
+[R]emove Entry
+[E]xit (NOTE: Saving is currently not a feature. Data will be lost)
+
