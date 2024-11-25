@@ -47,8 +47,7 @@ async function readIfExists(path){
     if (data === '') //if file is empty
       return {response:'Empty', list:[{item0:'blank'}] };
     //else
-    let list = data.list;
-    return {response:"File contents avalible", list};
+    return {response:"File contents avalible", data};
 
   } catch (error) {
     //console.log(error);
