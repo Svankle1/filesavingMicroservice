@@ -20,7 +20,7 @@ async function runServer() {
       resultJson = await writeToFile(order.path, JSON.stringify(order.data));
     }
     else {
-      resultJson = {message: "Error: Order " + order.operation + " recieved. Does not allign with the 2 preset operations."};
+      resultJson = {response: "Error: Order " + order.operation + " recieved. Does not allign with the 2 preset operations."};
       console.error("Error: Order " + order.operation + " recieved. Does not allign with the 2 preset operations.");
       break;
     }
@@ -36,7 +36,7 @@ async function writeToFile(path, content){
     console.log(err);
     return {response:"Wierd error on write: " + err};
   }
-  return {response:"No code breakage"};
+  return {response:"No code breakage. Writing seems sucsessfull"};
 }
 
 async function readIfExists(path){
@@ -47,7 +47,7 @@ async function readIfExists(path){
     if (data === '') //if file is empty
       return {response:'Empty', list:[{item0:'blank'}] };
     //else
-    return data;
+    return {response:"File contents avalible", data};
 
   } catch (error) {
     //console.log(error);
