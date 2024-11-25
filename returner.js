@@ -1,5 +1,4 @@
 const zmq = require("zeromq");
-//const fs = require('node:fs');
 const fs = require('fs/promises');
 const { write } = require("fs");
 
@@ -41,17 +40,13 @@ async function writeToFile(path, content){
 }
 
 async function readIfExists(path){
-  //let result = '';
   try{
     let data = await fs.readFile(path, { encoding: 'utf8' });
     data = JSON.parse(data);
     
-    //if empty
-    if (data === '')
+    if (data === '') //if file is empty
       return {response:'Empty', list:[{item0:'blank'}] };
     //else
-
-    //code working with reading data here
     return data;
 
   } catch (error) {
@@ -68,4 +63,3 @@ async function readIfExists(path){
 }
 
 runServer();
-//await fs.writeFile('./.playlistData', '');
