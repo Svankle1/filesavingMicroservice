@@ -24,7 +24,7 @@ async function runServer() {
       console.error("Error: Order " + order.operation + " recieved. Does not allign with the 2 preset operations.");
       break;
     }
-
+    console.log(resultJson);
     await sock.send(JSON.stringify(resultJson));
   }
 }
@@ -47,7 +47,8 @@ async function readIfExists(path){
     if (data === '') //if file is empty
       return {response:'Empty', list:[{item0:'blank'}] };
     //else
-    return {response:"File contents avalible", data};
+    let list = data.list;
+    return {response:"File contents avalible", list};
 
   } catch (error) {
     //console.log(error);
