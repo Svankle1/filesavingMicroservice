@@ -1,18 +1,16 @@
-{
-  "list": [
-    {
-      "name": "A Talking Bass Guitar Interviews the Remie From Intergalactic Channels",
-      "url": "https://soundcloud.com/evan-mcdoniels/a-talking-bass-guitar",
-      "details": "SoundCloud"
-    },
-    {
-      "name": "Get Out (Phase 1) - Deceive INC OST",
-      "url": "https://youtu.be/-pgHFD_rrso"
-    },
-    {
-      "name": "Having Fallen, It Was Blood",
-      "url": "https://soundcloud.com/chrischristodouloumusic/having-fallen-it-was-blood",
-      "details": "Risk Of Rain OST - Voices Of The Void DLC"
-    }
-  ]
-}
+[
+	{
+		"name": "A Talking Bass Guitar Interviews the Remie From Intergalactic Channels",
+		"url": "https://soundcloud.com/evan-mcdoniels/a-talking-bass-guitar",
+		"details": "SoundCloud"
+	},
+	{
+		"name": "Get Out (Phase 1) - Deceive INC OST",
+		"url": "https://youtu.be/-pgHFD_rrso"
+	},
+	{
+		"name": "Having Fallen, It Was Blood",
+		"url": "https://soundcloud.com/chrischristodouloumusic/having-fallen-it-was-blood",
+		"details": "Risk Of Rain OST - Voices Of The Void DLC"
+	}
+]
