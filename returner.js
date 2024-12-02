@@ -7,7 +7,7 @@ async function runServer() {
   let replyMsg = '';
 
   await sock.bind("tcp://127.0.0.1:3000");
-  console.log("Listening to tcp://127.0.0.1:3000");
+  console.log("File saving Microservice listening to tcp://127.0.0.1:3000");
   for await (const [msg] of sock) { //currently reading
     console.log("Received: "+ msg.toString());
     const order = JSON.parse(msg.toString())
